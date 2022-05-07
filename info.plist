@@ -68,9 +68,10 @@
 				<key>runningsubtext</key>
 				<string>Searching...</string>
 				<key>script</key>
-				<string>/opt/homebrew/bin/python3 app.py {query}</string>
+				<string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+python3 app.py "${1}"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
