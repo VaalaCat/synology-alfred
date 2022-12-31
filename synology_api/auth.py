@@ -17,7 +17,8 @@ class Authentication:
         if self._verify is False:
             requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         schema = 'https' if secure else 'http'
-        self._base_url = '%s://%s:%s/webapi/' % (schema, self._ip_address, self._port)
+        self._base_url = '%s://%s:%s/webapi/' % (
+            schema, self._ip_address, self._port)
 
         self.full_api_list = {}
         self.app_api_list = {}
@@ -38,7 +39,8 @@ class Authentication:
                 if self._debug is True:
                     return 'User already logged'
         else:
-            session_request = requests.get(self._base_url + login_api, param, verify=self._verify)
+            session_request = requests.get(
+                self._base_url + login_api, param, verify=self._verify)
             self._sid = session_request.json()['data']['sid']
             self._session_expire = False
             if self._debug is True:
@@ -48,7 +50,8 @@ class Authentication:
         logout_api = 'auth.cgi?api=SYNO.API.Auth'
         param = {'version': '2', 'method': 'logout', 'session': application}
 
-        response = requests.get(self._base_url + logout_api, param, verify=self._verify)
+        response = requests.get(
+            self._base_url + logout_api, param, verify=self._verify)
         if response.json()['success'] is True:
             self._session_expire = True
             self._sid = None
@@ -64,7 +67,8 @@ class Authentication:
         query_path = 'query.cgi?api=SYNO.API.Info'
         list_query = {'version': '1', 'method': 'query', 'query': 'all'}
 
-        response = requests.get(self._base_url + query_path, list_query, verify=self._verify).json()
+        response = requests.get(
+            self._base_url + query_path, list_query, verify=self._verify).json()
 
         if app is not None:
             for key in response['data']:

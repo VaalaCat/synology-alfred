@@ -29,6 +29,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>AD6D3B1E-3612-4DC4-BAC1-240ED5E912B0</key>
+		<array/>
 	</dict>
 	<key>createdby</key>
 	<string>VaalaCat</string>
@@ -117,7 +119,7 @@ python3 app.py "${1}"</string>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>https://{var:host}/file/</string>
+				<string>{var:host}/file/</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
@@ -157,21 +159,24 @@ python3 app.py "${1}"</string>
 	</dict>
 	<key>variables</key>
 	<dict>
+		<key>dsm_version</key>
+		<string>6</string>
 		<key>host</key>
-		<string></string>
+		<string>https/http://xxxxxx</string>
 		<key>port</key>
-		<string></string>
+		<string>5001</string>
 		<key>pwd</key>
-		<string></string>
+		<string>xxxxxxxx</string>
 		<key>user</key>
-		<string></string>
+		<string>xxxxxxxxxx</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
-		<string>port</string>
+		<string>user</string>
+		<string>dsm_version</string>
 		<string>host</string>
 		<string>pwd</string>
-		<string>user</string>
+		<string>port</string>
 	</array>
 	<key>version</key>
 	<string>0.1</string>
