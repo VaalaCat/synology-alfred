@@ -50,7 +50,7 @@ class Authentication:
         logout_api = 'auth.cgi?api=SYNO.API.Auth'
         param = {'version': '2', 'method': 'logout', 'session': application}
 
-        response = requests.get(
+        response = requests.post(
             self._base_url + logout_api, param, verify=self._verify)
         if response.json()['success'] is True:
             self._session_expire = True

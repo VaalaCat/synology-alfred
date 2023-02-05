@@ -43,4 +43,4 @@ class UniversalSearch:
             "version": 1
         }
 
-        return self.request_data(api_name, api_path, req_param)
+        return self.request_data(api_name, api_path, req_param, method='post')
