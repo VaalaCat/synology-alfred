@@ -31,9 +31,43 @@ class UniversalSearch:
             "criteria_list": '[]',
             "from": 0,
             "size": 10,
-            "fields": '["SYNOMDAcquisitionMake","SYNOMDAcquisitionModel","SYNOMDAlbum","SYNOMDAperture","SYNOMDAudioBitRate","SYNOMDAudioTrackNumber","SYNOMDAuthors","SYNOMDCodecs","SYNOMDContentCreationDate","SYNOMDContentModificationDate","SYNOMDCreator","SYNOMDDurationSecond","SYNOMDExposureTimeString","SYNOMDExtension","SYNOMDFSCreationDate","SYNOMDFSName","SYNOMDFSSize","SYNOMDISOSpeed","SYNOMDLastUsedDate","SYNOMDMediaTypes","SYNOMDMusicalGenre","SYNOMDOwnerUserID","SYNOMDOwnerUserName","SYNOMDRecordingYear","SYNOMDResolutionHeightDPI","SYNOMDResolutionWidthDPI","SYNOMDTitle","SYNOMDVideoBitRate","SYNOMDIsEncrypted"]',
+            "fields": '[' +
+                '"SYNOMDAcquisitionMake",' +
+                '"SYNOMDAcquisitionModel",' +
+                '"SYNOMDAlbum",' +
+                '"SYNOMDAperture",' +
+                '"SYNOMDAudioBitRate",' +
+                '"SYNOMDAudioTrackNumber",' +
+                '"SYNOMDAuthors",' +
+                '"SYNOMDCodecs",' +
+                '"SYNOMDContentCreationDate",' +
+                '"SYNOMDContentModificationDate",' +
+                '"SYNOMDCreator",' +
+                '"SYNOMDDurationSecond",' +
+                '"SYNOMDExposureTimeString",' +
+                '"SYNOMDExtension",' +
+                '"SYNOMDFSCreationDate",' +
+                '"SYNOMDFSName",' +
+                '"SYNOMDFSSize",' +
+                '"SYNOMDISOSpeed",' +
+                '"SYNOMDLastUsedDate",' +
+                '"SYNOMDMediaTypes",' +
+                '"SYNOMDMusicalGenre",' +
+                '"SYNOMDOwnerUserID",' +
+                '"SYNOMDOwnerUserName",' +
+                '"SYNOMDRecordingYear",' +
+                '"SYNOMDResolutionHeightDPI",' +
+                '"SYNOMDResolutionWidthDPI",' +
+                '"SYNOMDTitle",' +
+                '"SYNOMDVideoBitRate",' +
+                '"SYNOMDIsEncrypted"' +
+                ']',
             "file_type": "",
-            "search_weight_list": '[{"field":"SYNOMDWildcard","weight":1},{"field":"SYNOMDTextContent","weight":1},{"field":"SYNOMDSearchFileName","weight":8.5,"trailing_wildcard":"true"}]',
+            "search_weight_list": '[' +
+                '{"field":"SYNOMDWildcard","weight":1},' +
+                '{"field":"SYNOMDTextContent","weight":1},' +
+                '{"field":"SYNOMDSearchFileName","weight":8.5,"trailing_wildcard":"true"}' +
+                ']',
             "sorter_field": "relevance",
             "sorter_direction": "asc",
             "sorter_use_nature_sort": "false",
