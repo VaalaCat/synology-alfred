@@ -1,6 +1,9 @@
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+import os
+import json
 
+from typing_extensions import override
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 class Authentication:
     def __init__(self, ip_address, port, username, password, secure=False, cert_verify=False, dsm_version=7, debug=True, otp_code=None):
@@ -143,3 +146,87 @@ class Authentication:
     @property
     def base_url(self):
         return self._base_url
+
+class CachableAuthentication(Authentication):
+
+    cached_session = {}
+
+    def __init__(self, ip_address, port, username, password,
+               secure=False,
+               cert_verify=False,
+               dsm_version=7,
+               debug=True,
+               otp_code=None,
+               cachedir='~/.cache/synology_api'):
+        super.__init__(ip_address, port, username, password, secure, cert_verify, dsm_version, debug, otp_code)
+        self.cachedir = cachedir
+        self.cachefile = os.path.join(self.cachedir, "session.json")
+
+    def _load(self):
+        if not os.path.exists(self.cachedir):
+            os.makedirs(self.cachedir, 0o750, True)
+        if not os.path.exists(self.cachefile):
+            cached_session = {}
+            return
+
+        with open(self.cachefile, 'r') as f:
+            cached_session = json.load(f)
+
+    def _store(self):
+        if len(self.cached_session):
+            return
+        if not os.path.exists(self.cachedir):
+            os.makedirs(self.cachedir, 0o750, True)
+
+        with open(self.cachefile, 'w') as f:
+            cached_session = json.dump(self.cached_session, f)
+
+    @property
+    def session(self) -> dict:
+        if len(self.cached_session) == 0:
+            self._load()
+        return self.cached_session
+
+    @override
+    def get_api_list(self, app=None):
+        api_info = self.session.get('app_api_list')
+        full_info = self.session.get('full_api_list')
+        if (app is not None and api_info is None) or full_info is None:
+            query_path = 'query.cgi?api=SYNO.API.Info'
+            list_query = {'version': '1', 'method': 'query', 'query': 'all'}
+
+            response = requests.get(
+                self._base_url + query_path, list_query, verify=self._verify).json()
+
+            if app is not None:
+                self.cached_session['app_api_list'] = {}
+                for key in response['data']:
+                    if app.lower() in key.lower():
+                        self.cached_session['app_api_list'][key] = response['data'][key]
+            else:
+                self.cached_session['full_api_list'] = response['data']
+
+        self.app_api_list = self.cached_session['app_api_list']
+        self.full_api_list = self.cached_session['full_api_list']
+        return
+
+    @override
+    def login(self, application):
+        login_api = 'auth.cgi?api=SYNO.API.Auth'
+        param = {'version': self._version, 'method': 'login', 'account': self._username,
+                 'passwd': self._password, 'session': application, 'format': 'cookie'}
+        if self._otp_code:
+            param['otp_code'] = self._otp_code
+
+        if not self._session_expire:
+            if self._sid is not None:
+                self._session_expire = False
+                if self._debug is True:
+                    return 'User already logged'
+        else:
+            session_request = requests.get(
+                self._base_url + login_api, param, verify=self._verify)
+            self._sid = session_request.json()['data']['sid']
+            self._session_expire = False
+            if self._debug is True:
+                return 'User logging... New session started!'
