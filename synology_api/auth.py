@@ -39,7 +39,7 @@ class Authentication:
                 if self._debug is True:
                     return 'User already logged'
         else:
-            session_request = requests.get(
+            session_request = requests.post(
                 self._base_url + login_api, param, verify=self._verify)
             self._sid = session_request.json()['data']['sid']
             self._session_expire = False
@@ -50,7 +50,7 @@ class Authentication:
         logout_api = 'auth.cgi?api=SYNO.API.Auth'
         param = {'version': '2', 'method': 'logout', 'session': application}
 
-        response = requests.post(
+        response = requests.get(
             self._base_url + logout_api, param, verify=self._verify)
         if response.json()['success'] is True:
             self._session_expire = True
